@@ -1,14 +1,25 @@
 version: '3'
 services:
   app:
+    container_name: git_deploy_app
     build:
       context: ./
       dockerfile: ./app.dockerfile
     working_dir: /var/www
+    environment:
+     - DEPLOY_TOKEN=${DEPLOY_TOKEN}
+     - REMOTE_REPOSITORY=${REMOTE_REPOSITORY}
+     - REPO_DIR=${REPO_DIR}
+     - REPO_BRANCH=${REPO_BRANCH}
+     - LOGFILE=${LOGFILE}
+     - GIT_PATH=${GIT_PATH}
+     - AFTER_PULL_COMMAND=${AFTER_PULL_COMMAND}
     volumes:
       - ../:/var/www
       - ../logs:/var/www/logs
+      - ${REPO_DIR}:/var/repo
   web:
+    container_name: git_deploy_web
     build:
       context: ./
       dockerfile: ./web.dockerfile
