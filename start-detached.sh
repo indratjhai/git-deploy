@@ -2,4 +2,5 @@
 
 docker-compose --file ./docker/docker-compose.yml up -d --build --force-recreate
 
-chmod -R 0777 ./logs
+chown -R www-data:www-data ./logs
+chown -R www-data:www-data ./.ssh
